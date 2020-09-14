@@ -1,0 +1,77 @@
+import requests
+from tkinter import *
+import time
+import datetime 
+
+url="https://economia.awesomeapi.com.br/all/"
+
+japan='JPY-BRL'
+china='CNY-BRL'
+dolar='USD-BRL'
+euro='EUR-BRL'
+
+listamoeda=[japan,china,dolar,euro]
+horario = datetime.datetime.now()
+
+#def cotacao():
+#    for i in listamoeda:
+#        response = requests.get(url+i)
+#        json_content = response.json()
+#        repository = json_content[i.split('-')[0]]
+#        print(f'Horario : {repository["create_date"]}')
+#        print(f'Moeda : {repository["name"]}')
+#        print(f'Maior Cotação : {repository["high"]}')
+#        print(f'Menor Cotação : {repository["low"]}')
+
+    
+def cotacao(moeda):
+        print(horario)
+        response = requests.get(url+moeda)
+        json_content = response.json()
+        repository = json_content[moeda.split('-')[0]]
+        return repository["high"]
+    
+
+
+window = Tk()
+
+window.title("Cotacao de moedas : ")
+l1=Label(window,text="Euro")
+l1.grid(row=0,column=0)
+
+l2=Label(window,text="Dolar")
+l2.grid(row=0,column=2)
+
+l3=Label(window,text="Yuan")
+l3.grid(row=1,column=0)
+
+l4=Label(window,text="Iene")
+l4.grid(row=1,column=2)
+###################
+
+eurotext=StringVar()
+e1=Entry(window,textvariable=eurotext)
+resultadoeuro=cotacao(euro)
+e1.insert(0,resultadoeuro)
+e1.grid(row=0, column=1)
+
+dolartext=StringVar()
+e1=Entry(window,textvariable=dolartext)
+resultadodolar=cotacao(dolar)
+e1.insert(0,resultadodolar)
+e1.grid(row=0, column=3)
+
+yuantext=StringVar()
+e1=Entry(window,textvariable=yuantext)
+resultadoyuan=cotacao(china)
+e1.insert(0,resultadoyuan)
+e1.grid(row=1, column=1)
+
+ienetext=StringVar()
+e1=Entry(window,textvariable=ienetext)
+resultadoiene=cotacao(japan)
+e1.insert(0,resultadoiene)
+e1.grid(row=1, column=3)
+window.mainloop()
+
+#
